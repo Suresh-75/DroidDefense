@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Droid Defense</title>
+</head>
+
+<body>
+    <section class="navBar">
+        <div class="score">
+            <span>SCORE : <span class="scoreValue">0</span></span>
+            <br>
+            <span>HIGH-SCORE : <span class="highScoreValue">0</span></span>
+        </div>
+        <div>
+            <span>ENERGY-ORBS : <span>0</span></span>
+        </div>
+    </section>
+    <div class="gameStartIntro">
+        <section>PROTECT THE BASE !!</section>
+    </div>
+    <div id="number" class="number3">3</div>
+    <div id="number" class="number2">2</div>
+    <div id="number" class="number1">1</div>
+    <dialog class="levelOverModal">
+        <section class="modalContainer">
+            <p class="levelOverText">MISSION-02</p>
+            <span class="overLine"></span>
+            <span class="levelUpScore">SCORE : <span class="scoreModal"></span></span>
+            <div class="btnsMOdal">
+                <a href="../index.html" class="mapModal">GAME-MAP</a>
+                <a class="nextLevelModal">CONTINUE</a>
+            </div>
+        </section>
+    </dialog>
+    <canvas id="canvas"></canvas>
+    <script src="main.js"></script>
+</body>
+
+</html>
