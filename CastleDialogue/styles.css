@@ -1,0 +1,124 @@
+.containerWeapons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.castleModalWeapons {
+    width: 75%;
+    color: white;
+    height: 75%;
+    padding: 0;
+    border: 10px solid #c6b8b8a5;
+    background-color: #a99a6a;
+    border-radius: 0.75rem;
+}
+
+.containerWeapons>img {
+    width: 500px;
+    position: fixed;
+    left: 10%;
+    top: 10%;
+    opacity: 1;
+    transition: 0.5s;
+
+}
+
+.infoWeapons {
+    font-weight: bolder;
+    letter-spacing: 2px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.containerWeapons>img:hover {
+    opacity: 0.2;
+}
+
+.weaponsSlots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.weaponsModal {
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    background-color: rgba(60, 61, 59, 0.859);
+    width: 20rem;
+    height: 25rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    /* border: 10px solid rgb(62, 60, 60); */
+}
+
+.weaponsModal:nth-of-type(2) {
+    background-color: rgba(164, 37, 37, 0.91);
+}
+
+.weaponsModal:nth-of-type(3) {
+    background-color: rgba(39, 58, 125, 0.658);
+}
+
+.previousBtn,
+.nextBtn {
+    position: absolute;
+    top: 50%;
+    left: 1%;
+    background-color: rgb(236, 236, 236);
+    border-radius: 50%;
+    border: none;
+    font-size: large;
+    font-weight: bolder;
+    padding: 0.2rem 0.5rem;
+}
+
+.nextBtn {
+    position: absolute;
+    top: 50%;
+    left: 96%;
+}
+
+.soldierOutfit,
+.SAMURAIOutfit,
+.WANDEREROutfit {
+    padding: 0.5rem 0;
+    position: relative;
+    color: white;
+}
+
+#soldierOutfitBox {
+    background: url(soldierImg.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: relative;
+    left: 10%;
+    width: 85%;
+    height: 80%;
+}
+
+#SAMURAIOutfitBox {
+    background: url(sam.png);
+    background-size: 290px;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+}
+
+#WANDEREROutfitBox {
+    background: url(assassin.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: relative;
+    top: -10%;
+    left: 10%;
+    width: 90%;
+    height: 90%;
+}

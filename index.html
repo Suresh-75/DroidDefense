@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="pointsContainer">
+        <section class="currentLevel">
+            <img class="coinsImg" src="images/coin.png">
+            <div class="pointsBox "></div>
+            <div class="pointsBox points"></div>
+            <div class="pointsBox points"></div>
+            <div class="pointsBox points"></div>
+            <div class="pointsBox points"></div>
+        </section>
+
+        <section class="powerPoints">
+            <img class="levelImg" src="images/level-up.png">
+            <div class="levelsBox level"></div>
+            <div class="levelsBox level"></div>
+            <div class="levelsBox level"></div>
+            <div class="levelsBox level"></div>
+            <div class="levelsBox level"></div>
+        </section>
+    </div>
+    <section></section>
+    <a href="Level1/level1.html" class="locationBtn"></a>
+    <a class="locationBtn2"></a>
+    <a class="locationBtn3"></a>
+    <a class="locationBtn4"></a>
+    <a class="locationBtn5"></a>
+    <div class="mainMap">
+    </div>
+    <button class="castle">CASTLE</button>
+    <button class="mBoss">SEA-KING</button>
+    <button class="weaponsMap">UPGRADE</button>
+    <button class="fBoss">FINAL-BOSS</button>
+    <a href="Level1/index.html" class="attack"><img class="treasureMap" src="images/treasure-map (1).png">ATTACK!!</a>
+    <button class="UPGRADE"><img class="weaponImg" src="images/weapon.png">ARMORY</button>
+
+    <!-- king dialogue -->
+    <dialog class="castleModal">
+        <button class="closeKingBtn">X</button>
+        <div class="containerModal">
+            <p class="info">
+                IN THE KINGDOM OF ELDORIA, AN ANCIENT MONSTER AWAKENS,
+                ITS SINISTER POWER THREATENING THE REALM'S FORSAKEN.
+                A HERO EMERGES, CHOSEN BY FATE'S DECREE,
+                ARMED WITH COURAGE AND A WILL TO SET ELDORIA FREE. </p>
+            <img src="images/king.png">
+        </div>
+    </dialog>
+    <!-- seaMonster -->
+    <dialog class="castleModalSea">
+        <button class="closeSeaBtn">X</button>
+        <div class="containerSea">
+            <p class="infoSea">
+                In the coastal realm, a monstrous creature ascends,
+                From the depths of the ocean, its wrath extends.
+                Defeat him to gain access to the armory fight the final boss </p>
+            <img src="images/seaMonster.png">
+        </div>
+    </dialog>
+    <!-- Weapons -->
+    <dialog class="castleModalWeapons">
+        <div class="containerWeapons">
+            <nav class="weaponModalNav">
+                <p class="infoWeapons">UPGRADE</p>
+                <button class="weaponsExit">EXIT</button>
+            </nav>
+            <button class="previousBtn">&lt;</button>
+            <section class="weaponsSlots">
+                <div class="weaponsModal">
+                    <div id="soldierOutfitBox"></div>
+                    <span class="soldierOutfit">SOLDIER</span>
+                    <span class="costOfWeapon">1,500<img src="images/coin.png"></span>
+                    <main class="armoryBtns">
+                        <button class="buyBtn">EQUIP</button>
+                        <span class="uncommonSpan">UNCOMMON</span>
+                    </main>
+                </div>
+                <div class="weaponsModal">
+                    <div id="SAMURAIOutfitBox"></div>
+                    <span class="SAMURAIOutfit">SAMURAI-ARCHER</span>
+                    <span class="costOfWeapon">6,000<img src="images/coin.png"></span>
+                    <main class="armoryBtns">
+                        <button class="buyBtn">EQUIP</button>
+                        <span class="legendarySpan">MYSTICAL</span>
+                    </main>
+                </div>
+                <div class="weaponsModal">
+                    <div id="WANDEREROutfitBox"></div>
+                    <span class="WANDEREROutfit">ASSASSIN</span>
+                    <span class="costOfWeapon">3,500<img src="images/coin.png"></span>
+                    <main class="armoryBtns">
+                        <button class="buyBtn">EQUIP</button>
+                        <span class="raraSpan">RARE</span>
+                    </main>
+                </div>
+            </section>
+            <button class="nextBtn">&gt;</button>
+            <!-- <img src="Weapons.png"> -->
+        </div>
+    </dialog>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

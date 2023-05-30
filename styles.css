@@ -1,0 +1,608 @@
+* {
+
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+    background-color: #1d5e6e;
+    background: rgb(45, 93, 108);
+
+}
+
+.mainMap {
+    z-index: -1;
+    background-color: red;
+    background: url(images/My\ project-1.png);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    margin-top: 1%;
+    width: 70%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.castle,
+.mBoss,
+.weaponsMap,
+.fBoss {
+    color: white;
+    font-size: 1rem;
+    position: relative;
+    top: 25%;
+    right: -60%;
+    background-color: rgba(211, 209, 209, 0.188);
+    border: none;
+    transition: 0.2s;
+    font-weight: bolder;
+}
+
+.mBoss {
+    position: relative;
+    top: 35%;
+    right: -20%;
+}
+
+.weaponsMap {
+    position: relative;
+    top: 56%;
+    right: -32%;
+    color: rgb(254, 253, 255);
+}
+
+.fBoss {
+    position: relative;
+    top: 65%;
+    right: -40%;
+
+}
+
+.castle:hover,
+.mBoss:hover,
+.weaponsMap:hover,
+.fBoss:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.attack {
+    position: fixed;
+    top: 75%;
+    left: 2%;
+    padding: 1rem 1rem;
+    border: none;
+    border-radius: 0.75rem;
+    transition: 0.5s;
+    background-color: #857b36;
+    color: white;
+    font-weight: bolder;
+    font-size: 1rem;
+    text-decoration: none;
+    text-align: center;
+}
+
+.attack:hover {
+    cursor: pointer;
+    color: #857b36;
+    background-color: #18444d;
+    box-shadow: 0px 0px 10px #857b36;
+}
+
+.attack:active {
+    opacity: 0.6;
+}
+
+.UPGRADE {
+    position: fixed;
+    top: 75%;
+    right: 2%;
+    padding: 1rem 1rem;
+    border: none;
+    border-radius: 0.75rem;
+    transition: 0.5s;
+    background-color: #857b36;
+    color: white;
+    font-weight: bolder;
+    font-size: 1rem;
+}
+
+.UPGRADE:hover {
+    cursor: pointer;
+    color: #857b36;
+    background-color: #18444d;
+    box-shadow: 0px 0px 10px #857b36;
+}
+
+.treasureMap {
+    display: block;
+    height: 100px;
+}
+
+.weaponImg {
+    display: block;
+    height: 100px;
+}
+
+.locationBtn,
+.locationBtn2,
+.locationBtn3,
+.locationBtn4,
+.locationBtn5 {
+    position: absolute;
+    top: 25%;
+    right: 50%;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    color: white;
+    background: url(images/location.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    transition: 0.4s;
+}
+
+.locationBtn2 {
+    top: 25%;
+    right: 70%;
+}
+
+.locationBtn3 {
+    top: 48%;
+    right: 55%;
+}
+
+.locationBtn4 {
+    top: 70%;
+    right: 62%;
+}
+
+.locationBtn5 {
+    top: 75%;
+    right: 48%;
+}
+
+.locationBtn:hover,
+.locationBtn2:hover,
+.locationBtn3:hover,
+.locationBtn4:hover,
+.locationBtn5:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.pointsContainer {
+    z-index: -1;
+    position: fixed;
+    top: 2%;
+    right: 1%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    align-items: end;
+}
+
+.powerPoints {
+    border: 2px solid rgba(0, 0, 0, 0.196);
+    width: 15rem;
+    height: 3.5rem;
+    background-color: rgba(255, 0, 0, 0.038);
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: end;
+}
+
+.currentLevel {
+    border-radius: 0.5rem;
+    border: 2px solid rgba(0, 0, 0, 0.129);
+    width: 20rem;
+    height: 3.5rem;
+    background-color: rgba(255, 0, 0, 0.105);
+    display: flex;
+    justify-content: end;
+}
+
+.coinsImg,
+.levelImg {
+    position: absolute;
+    z-index: 1;
+    height: 45%;
+}
+
+.pointsBox {
+    width: 20%;
+}
+
+.points {
+    background-color: #fdb33a;
+}
+
+.points:nth-last-of-type(5) {
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+
+}
+
+.points:nth-last-of-type(1) {
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.levelsBox {
+    width: 20%;
+}
+
+.level {
+    background-color: #b7e445;
+}
+
+.level:nth-last-of-type(5) {
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+
+}
+
+.level:nth-last-of-type(1) {
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+/* modal */
+.containerModal {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: rgb(156, 50, 50);
+    border-radius: 1rem;
+}
+
+.castleModal {
+    width: 50%;
+    color: white;
+    border-radius: 1rem;
+    border: 5px solid rgb(255, 149, 0);
+}
+
+.containerModal>img {
+    width: 500px;
+    position: fixed;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.info {
+    font-weight: bolder;
+    letter-spacing: 2px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.containerModal>img:hover {
+    opacity: 0.2;
+}
+
+.containerSea {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: #6398a8;
+    border-radius: 0.5rem;
+}
+
+.castleModalSea {
+    width: 50%;
+    color: white;
+    padding: 0;
+    border: 10px solid #31464b;
+    border-radius: 0.75rem;
+}
+
+.containerSea>img {
+    width: 500px;
+    position: fixed;
+    left: 10%;
+    top: 10%;
+    opacity: 1;
+    transition: 0.5s;
+
+}
+
+.infoSea {
+    font-size: x-large;
+    font-weight: bolder;
+    letter-spacing: 2px;
+    padding: 1rem;
+    text-align: center;
+
+}
+
+.containerSea>img:hover {
+    opacity: 0.2;
+}
+
+.closeKingBtn,
+.closeSeaBtn {
+    position: absolute;
+    top: 2%;
+    left: 97%;
+    background-color: rgba(255, 0, 0, 0);
+    border: none;
+    font-weight: bolder;
+    font-size: medium;
+    transition: 0.3s;
+}
+
+.closeKingBtn:hover,
+.closeSeaBtn:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+/* weapons */
+
+.weaponModalNav {
+    display: flex;
+}
+
+.weaponsExit {
+    position: absolute;
+    top: 5%;
+    right: 6%;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-weight: bolder;
+    background-color: rgb(196, 108, 36);
+    color: white;
+    font-family: "dragon";
+    letter-spacing: 2px;
+    box-shadow: 0px 0px 10px rgb(38, 39, 38);
+    transition: 0.3s;
+}
+
+.weaponsExit:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.containerWeapons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.castleModalWeapons {
+    width: 75%;
+    color: white;
+    height: 75%;
+    padding: 0;
+    border: 1px solid #ffffffa5;
+    /* border: none; */
+    /* background: url(images/weaponBackground.jpg); */
+    background: radial-gradient(rgb(152, 176, 148), rgb(49, 52, 12));
+    border-radius: 0.75rem;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0);
+}
+
+.containerWeapons>img {
+    width: 500px;
+    position: fixed;
+    left: 10%;
+    top: 10%;
+    opacity: 1;
+    transition: 0.5s;
+
+}
+
+.infoWeapons {
+    display: inline-block;
+    font-weight: bolder;
+    letter-spacing: 2px;
+    padding: 1rem;
+    text-align: center;
+    font-size: x-large;
+    font-family: "dragon";
+}
+
+.containerWeapons>img:hover {
+    opacity: 0.2;
+}
+
+.weaponsSlots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.costOfWeapon {
+    position: absolute;
+    font-weight: bolder;
+    top: 66%;
+    font-size: x-large;
+}
+
+.costOfWeapon>img {
+    width: 25px;
+    position: absolute;
+}
+
+.weaponsModal {
+    font-family: "dragon";
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    background-color: rgba(60, 61, 59, 0.512);
+    width: 20rem;
+    height: 25rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    /* border: 1px solid rgb(64, 136, 178); */
+    box-shadow: 0px 0px 10px rgb(60, 60, 60);
+    border: 3px solid rgba(60, 61, 59, 0.512);
+    /* border: 10px solid rgb(62, 60, 60); */
+    transition: 0.3s;
+
+}
+
+.weaponsModal:hover {
+    cursor: pointer;
+    border: 3px solid rgb(118, 116, 30);
+    box-shadow: 0px 0px 25px rgb(118, 116, 30);
+}
+
+.weaponsModal:hover .soldierOutfit,
+.weaponsModal:hover .SAMURAIOutfit,
+.weaponsModal:hover .WANDEREROutfit {
+    letter-spacing: 2px;
+}
+
+.weaponsModal:nth-of-type(2) {
+    background-color: rgba(164, 37, 37, 0.751);
+}
+
+.weaponsModal:nth-of-type(3) {
+    background-color: rgba(113, 85, 48, 0.593);
+}
+
+.previousBtn,
+.nextBtn {
+    position: absolute;
+    top: 50%;
+    left: 1%;
+    background-color: rgb(236, 236, 236);
+    border-radius: 50%;
+    border: none;
+    font-size: large;
+    font-weight: bolder;
+    padding: 0.2rem 0.5rem;
+}
+
+.nextBtn {
+    position: absolute;
+    top: 50%;
+    left: 96%;
+}
+
+.soldierOutfit,
+.SAMURAIOutfit,
+.WANDEREROutfit {
+    transition: 0.2s;
+    padding: 0.5rem 0;
+    position: relative;
+    top: -25%;
+    color: white;
+    font-size: 2rem;
+}
+
+#soldierOutfitBox {
+    background: url(images/soldierImg.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: relative;
+    left: 10%;
+    width: 85%;
+    height: 80%;
+}
+
+
+#SAMURAIOutfitBox {
+    background: url(images/sam.png);
+    background-size: 290px;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+}
+
+#WANDEREROutfitBox {
+    background: url(images/assassin.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: relative;
+    top: -5%;
+    left: 15%;
+    width: 100%;
+    height: 100%;
+}
+
+.armoryBtns {
+    display: flex;
+    gap: 2rem;
+    padding-bottom: 1rem;
+}
+
+.buyBtn {
+    padding: 0.35rem 1rem;
+    background: linear-gradient(to bottom, rgb(196, 172, 38), rgb(210, 191, 80));
+    box-shadow: 0px 0px 5px gold;
+    color: white;
+    border: none;
+    border: 2px solid gold;
+    border-radius: 0.25rem;
+    font-weight: bolder;
+    font-family: "dragon";
+    letter-spacing: 1px;
+}
+
+.uncommonSpan {
+    font-family: "raphia";
+    padding: 0.35rem 1rem;
+    background-color: grey;
+    box-shadow: 0px 0px 5px rgb(30, 30, 30);
+    border-radius: 0.25rem;
+    color: black;
+    font-weight: bolder;
+    letter-spacing: 1px;
+}
+
+.legendarySpan {
+    font-family: "raphia";
+    padding: 0.35rem 1rem;
+    background-color: rgb(188, 46, 115);
+    box-shadow: 0px 0px 10px rgb(177, 40, 106);
+    border-radius: 0.25rem;
+    color: white;
+    font-weight: bolder;
+    letter-spacing: 2px;
+}
+
+.raraSpan {
+    font-family: "raphia";
+    padding: 0.35rem 1rem;
+    background-color: rgb(103, 46, 188);
+    box-shadow: 0px 0px 5px rgb(42, 13, 85);
+    border-radius: 0.25rem;
+    color: white;
+    font-weight: bolder;
+    letter-spacing: 2px;
+}
+
+@font-face {
+    font-family: "dragon";
+    src: url(Fonts/dragon-hunter-font/DragonHunter-9Ynxj.otf);
+}
+
+@font-face {
+    font-family: "munake";
+    src: url(Fonts/munake-font/Munake-vm0rE.otf);
+}
+
+@font-face {
+    font-family: "raphia";
+    src: url(Fonts/raphia-font/RaphiaPersonalUse-gxe8E.otf);
+}
