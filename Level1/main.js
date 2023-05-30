@@ -556,7 +556,7 @@ window.addEventListener("keydown", (e) => {
     lastTimeStamp = currentTimeStamp;
 })
 function levelOverChecker() {
-    if (score >= 200) {
+    if (score >= 10) {
         levelUp = true;
         levelOverModal.showModal();
         setTimeout(() => {
