@@ -7,8 +7,10 @@ const number1 = document.querySelector(".number1")
 const levelOverModal = document.querySelector(".levelOverModal")
 const scoreModal = document.querySelector(".scoreModal")
 const overLine = document.querySelector(".overLine")
-let c = canvas.getContext("2d");
+const seaKingWave = document.querySelector(".wave2")
 
+let c = canvas.getContext("2d");
+let seconds = 60;
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
@@ -42,6 +44,69 @@ let enemyTypes = []
 const enemy1 = new Image();
 enemy1.src = "enemies/spritesheet.png"
 enemyTypes.push(enemy1);
+
+let seaKing = new Image()
+seaKing.src = "enemies/FrostGuardian/walk.png"
+
+class MonsterEnemy {
+    constructor(position, velocity, area) {
+        this.position = position;
+        this.velocity = velocity;
+        this.area = area
+        this.enemy = seaKing;
+        this.frameX = 0;
+        this.frameY = 0;
+        this.minFrame = 0
+        this.maxFrame = 8;
+        this.spriteWidth = 130;
+        this.spriteHeight = 150;
+        this.health = 250;
+    }
+    draw() {
+        // c.fillStyle = "green";
+        // c.fillRect(this.position.x, this.position.y, this.area.width, this.area.height)
+        c.drawImage(this.enemy, 30, this.frameX * (this.spriteWidth), this.spriteWidth, this.spriteHeight, this.position.x, this.position.y, this.area.width, this.area.height);
+        c.fillStyle = "black"
+        c.fillRect(this.position.x + 145, this.position.y + 35, 255, 20)
+        c.fillStyle = "red"
+        c.fillRect(this.position.x + 150, this.position.y + 35, 250, 15)
+        c.fillStyle = "gold"
+        c.fillRect(this.position.x + 150, this.position.y + 35, this.health, 15)
+        c.beginPath()
+        // c.arc(this.position.x, this.position.y, 10, 0, Math.PI * 2, false)
+        c.ellipse(this.position.x + 255, this.position.y + 336, 45, 3, 0, Math.PI * 2, false)
+        c.fillStyle = "black";
+        c.fill();
+    }
+    update() {
+        this.draw();
+        if (frame % 10 === 0) {
+            if (this.frameX < this.maxFrame) {
+                this.frameX++;
+            } else {
+                this.frameX = this.minFrame;
+            }
+        }
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+    }
+}
+let monsterEnemy = []
+function nextWave() {
+    if (seconds <= 0) {
+        seconds = 60;
+        clearInterval(spawnEnemy);
+        spawnEnemy = null;
+        let position = { x: canvas.width - 10, y: 100 }
+        let velocity = { x: -0.75, y: 0 };
+        let area = { width: 500, height: 450 };
+        seaKingWave.classList.add("wave2Show")
+        setTimeout(() => {
+            monsterEnemy.push(new MonsterEnemy(position, velocity, area))
+            seaKingWave.classList.add("wave2Remove")
+        }, 2000)
+    }
+}
 class Player {
     constructor(position, velocity, area) {
         this.position = position;
@@ -199,6 +264,8 @@ class Enemy {
         this.position.y += this.velocity.y;
     }
 }
+
+
 function randomYposition() {
     let yPos = (Math.random() * canvas.height)
     while (yPos < 100 || yPos > 400) {
@@ -218,7 +285,7 @@ function spawnEnemies() {
             //     x: 12 * (Math.cos(angle)),
             //     y: 12 * (Math.sin(angle))
             // }
-            let velocity = { x: -0.75, y: 0 }
+            let velocity = { x: -0.3, y: 0 }
             enemies.push(new Enemy(position, velocity, area))
         }, 2500)
     }, 1500)
@@ -293,7 +360,7 @@ function animate() {
             //  }
             if (collisionChecker(Projectile.position, Enemy.position)) {
                 // enemy1.src = "enemies/GolemDeath.png"
-                Enemy.health -= 20;
+                Enemy.health -= 10;
                 // enemies[enemies.indexOf(Enemy)].enemy.src = "enemies/GolemHit.png";
                 // setTimeout(() => {
                 //     enemies[enemies.indexOf(Enemy)].enemy.src = "enemies/spritesheet.png";
@@ -308,6 +375,16 @@ function animate() {
                 }
             }
         })
+        monsterEnemy.forEach((enemy) => {
+            if (MonstercollisionChecker(Projectile.position, enemy.position)) {
+                enemy.health -= 5;
+                Projectiles.splice(Projectiles.indexOf(Projectile), 1);
+                if (enemy.health <= 0) {
+                    monsterEnemy.splice(monsterEnemy.indexOf(enemy), 1);
+                }
+            }
+        })
+
     })
     enemies.forEach((Enemy) => {
         if (playerCollisionChecker(player1.position, Enemy.position)) {
@@ -359,7 +436,7 @@ function animate() {
     base.velocity.y = 0;
     if (gameOver === false) {
         if (keys.a.pressed && (player1.position.x > 0)) {
-            playerMain.src = "soldierSprite/Soldier_1/RunRev.png"
+            playerMain.src = "soldierSprite/FireWizard/RunRev.png"
             player1.velocity.x = -1.5
         }
         if (keys.d.pressed && (player1.position.x + player1.area.width < canvas.width)) {
@@ -393,9 +470,24 @@ function animate() {
     }
     frame++;
     levelOverChecker()
+    nextWave()
+    monsterEnemy.forEach((enemy) => {
+        enemy.update();
+    })
 }
 animate()
 spawnEnemies()
+
+function MonstercollisionChecker(bullet, enemy1) {
+    if (!(
+        bullet.x > enemy1.x + 300 ||
+        bullet.x + 5 < enemy1.x ||
+        bullet.y > enemy1.y + 300 ||
+        bullet.y + 5 < enemy1.y)
+    ) {
+        return true;
+    }
+}
 function baseCollisionChecker(base, Enemy) {
     if (!(
         base.x > Enemy.x + 150 ||
@@ -556,7 +648,7 @@ window.addEventListener("keydown", (e) => {
     lastTimeStamp = currentTimeStamp;
 })
 function levelOverChecker() {
-    if (score >= 200) {
+    if (false) {
         levelUp = true;
         levelOverModal.showModal();
         setTimeout(() => {
@@ -574,3 +666,42 @@ function levelOverChecker() {
         }, 1000)
     }
 }
+
+const time = document.querySelector(".time");
+let interval = null;
+// window.addEventListener("keydown", () => {
+//     if (interval) {
+//         return;
+//     }
+// }
+// )
+interval = setInterval(timer, 1000);
+function timer() {
+    seconds--;
+    let mins = Math.floor((seconds) / 60);
+    let secs = (seconds - (mins * 60)) % 60;
+    if (secs < 10) {
+        secs = "0" + secs;
+    }
+    if (mins < 10) {
+        mins = "0" + mins;
+    }
+    time.innerText = `${mins}:${secs}`;
+}
+// function getTimerText() {
+//     if (seconds <= 0) {
+//         seconds = 0;
+//         clearInterval(interval);
+//         interval = null;
+//         return true;
+//     } if (time.innerText === "00:00") {
+//         seconds = 0;
+//         clearInterval(interval);
+//         interval = null;
+//         return true;
+//     }
+// }
+
+
+
+

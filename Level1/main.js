@@ -8,7 +8,7 @@ const levelOverModal = document.querySelector(".levelOverModal")
 const scoreModal = document.querySelector(".scoreModal")
 const overLine = document.querySelector(".overLine")
 let c = canvas.getContext("2d");
-
+let seconds = 10;
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
@@ -32,16 +32,20 @@ let frame = 0;
 let score = 0;
 let spawnEnemy = null;
 const playerMain = new Image();
-playerMain.src = "soldierSprite/FireWizard/idle.png"
+playerMain.src = "soldierSprite/FireWizard/Idle.png"
 const backgroundImg = new Image();
-backgroundImg.src = "PNG/game_background_4/game_background_4.png"
+let backgroundImgGame = "PNG/game_background_4/game_background_4.png";
+
+
+backgroundImg.src = backgroundImgGame;
 const scoreBoard = document.querySelector(".scoreValue");
 let gameOver = false;
 let levelUp = false;
 let enemyTypes = []
 const enemy1 = new Image();
-enemy1.src = "enemies/spritesheet.png"
+enemy1.src = "/enemies/spritesheet.png"
 enemyTypes.push(enemy1);
+
 class Player {
     constructor(position, velocity, area) {
         this.position = position;
@@ -88,7 +92,7 @@ class Player {
         if (gameOver === true) {
             this.frameX = 3;
             this.maxFrame = 3;
-            playerMain.src = "soldierSprite/FireWizard/dead.png"
+            playerMain.src = "/soldierSprite/FireWizard/dead.png"
         }
     }
 }
@@ -122,7 +126,7 @@ const keys = {
     }
 }
 let ProjectileCharge1 = new Image()
-ProjectileCharge1.src = "soldierSprite/FireWizard/Charge.png"
+ProjectileCharge1.src = "/soldierSprite/FireWizard/Charge.png"
 let Projectiles = [];
 class Projectile {
     constructor(position, velocity, radius) {
@@ -167,7 +171,7 @@ class Enemy {
         this.frameX = 0;
         this.frameY = 0;
         this.minFrame = 0
-        this.maxFrame = 7;
+        this.maxFrame = 0;
         this.spriteWidth = 160;
         this.spriteHeight = 160;
         this.health = 100;
@@ -222,10 +226,25 @@ function spawnEnemies() {
             enemies.push(new Enemy(position, velocity, area))
         }, 2500)
     }, 1500)
-
+}
+function spawnEnemies2() {
+    setTimeout(() => {
+        spawnEnemy = setInterval(() => {
+            let area = { width: 192, height: 128 }
+            let yPos = randomYposition();
+            let position = { x: 500, y: 500 }
+            // const angle = Math.atan2(yPos - player1.position.y, xPos - player1.position.x)
+            // const velocity = {
+            //     x: 12 * (Math.cos(angle)),
+            //     y: 12 * (Math.sin(angle))
+            // }
+            let velocity = { x: -0.75, y: 0 }
+            enemies.push(new Enemy(position, velocity, area))
+        }, 2500)
+    }, 0)
 }
 let carBase = new Image()
-carBase.src = "jeep_1/idle.png"
+carBase.src = "/jeep_1/idle.png"
 class Base {
     constructor(position, area, velocity) {
         this.position = position;
@@ -299,7 +318,7 @@ function animate() {
                 //     enemies[enemies.indexOf(Enemy)].enemy.src = "enemies/spritesheet.png";
                 // }, 1000)
                 setTimeout(() => {
-                    player1.player.src = "soldierSprite/FireWizard/idle.png"
+                    player1.player.src = "/soldierSprite/FireWizard/idle.png"
                 }, 1000)
                 Projectiles.splice(Projectiles.indexOf(Projectile), 1);
                 if (Enemy.health <= 0) {
@@ -324,10 +343,10 @@ function animate() {
                 })
                 clearInterval(spawnEnemy);
                 spawnEnemy = null;
-                player1.player.src = "soldierSprite/FireWizard/dead.png"
+                player1.player.src = "/soldierSprite/FireWizard/dead.png"
                 enemies.forEach((Enemy) => {
                     Enemy.velocity.x = 0;
-                    enemies[enemies.indexOf(Enemy)].enemy.src = "enemies/GolemIdle.png";
+                    enemies[enemies.indexOf(Enemy)].enemy.src = "/enemies/GolemIdle.png";
                     // Enemy.src = "soldierSprite/Soldier_1/GolemIdle.png"
                 })
             }
@@ -340,10 +359,10 @@ function animate() {
                 clearInterval(spawnEnemy);
                 spawnEnemy = null;
                 base.maxFrame = 8;
-                base.car.src = "Jeep_1/Destroyed.png"
+                base.car.src = "/Jeep_1/Destroyed.png"
                 enemies.forEach((Enemy) => {
                     Enemy.velocity.x = 0;
-                    enemies[enemies.indexOf(Enemy)].enemy.src = "enemies/GolemIdle.png";
+                    enemies[enemies.indexOf(Enemy)].enemy.src = "/enemies/GolemIdle.png";
                     // Enemy.src = "soldierSprite/Soldier_1/GolemIdle.png"
                 })
             }
@@ -359,40 +378,41 @@ function animate() {
     base.velocity.y = 0;
     if (gameOver === false) {
         if (keys.a.pressed && (player1.position.x > 0)) {
-            playerMain.src = "soldierSprite/Soldier_1/RunRev.png"
+            playerMain.src = "/soldierSprite/Soldier_1/RunRev.png"
             player1.velocity.x = -1.5
         }
         if (keys.d.pressed && (player1.position.x + player1.area.width < canvas.width)) {
-            playerMain.src = "soldierSprite/FireWizard/run.png"
+            playerMain.src = "/soldierSprite/FireWizard/run.png"
             player1.velocity.x = 1.5
         }
         if (keys.w.pressed && (player1.position.y > 0)) {
-            playerMain.src = "soldierSprite/FireWizard/run.png"
+            playerMain.src = "/soldierSprite/FireWizard/run.png"
             player1.velocity.y = -1.5
         }
         if (keys.s.pressed && (player1.position.y + player1.area.height < canvas.height)) {
-            playerMain.src = "soldierSprite/FireWizard/run.png"
+            playerMain.src = "/soldierSprite/FireWizard/run.png"
             player1.velocity.y = 1.5
         }
         if (keys.ArrowLeft.pressed && (base.position.x > 0)) {
-            carBase.src = "Jeep_1/Ride_back.png"
+            carBase.src = "/Jeep_1/Ride_back.png"
             base.velocity.x = -2
         }
         if (keys.ArrowRight.pressed && (base.position.x + base.area.width < canvas.width)) {
-            carBase.src = "Jeep_1/Ride.png"
+            carBase.src = "/Jeep_1/Ride.png"
             base.velocity.x = 2
         }
         if (keys.ArrowUp.pressed && (base.position.y > 0)) {
-            carBase.src = "Jeep_1/Ride.png"
+            carBase.src = "/Jeep_1/Ride.png"
             base.velocity.y = -2
         }
         if (keys.ArrowDown.pressed && (base.position.y + base.area.height < canvas.height)) {
-            carBase.src = "Jeep_1/Ride.png"
+            carBase.src = "/Jeep_1/Ride.png"
             base.velocity.y = 2
         }
     }
     frame++;
     levelOverChecker()
+    nextWave()
 }
 animate()
 spawnEnemies()
@@ -464,39 +484,39 @@ window.addEventListener("keyup", (e) => {
     switch (e.key) {
         case "a":
             keys.a.pressed = false;
-            playerMain.src = "soldierSprite/FireWizard/idle.png"
+            playerMain.src = "/soldierSprite/FireWizard/idle.png"
             break;
         case "d":
             keys.d.pressed = false;
-            playerMain.src = "soldierSprite/FireWizard/idle.png"
+            playerMain.src = "/soldierSprite/FireWizard/idle.png"
             break;
         case "w":
             keys.w.pressed = false;
-            playerMain.src = "soldierSprite/FireWizard/idle.png"
+            playerMain.src = "/soldierSprite/FireWizard/idle.png"
             break;
         case "s":
             keys.s.pressed = false;
-            playerMain.src = "soldierSprite/FireWizard/idle.png"
+            playerMain.src = "/soldierSprite/FireWizard/idle.png"
             break;
         case "b":
             keys.v.pressed = false;
-            playerMain.src = "soldierSprite/FireWizard/idle.png"
+            playerMain.src = "/soldierSprite/FireWizard/idle.png"
             break;
         case "ArrowLeft":
             keys.ArrowLeft.pressed = false;
-            carBase.src = "jeep_1/idle.png"
+            carBase.src = "/jeep_1/idle.png"
             break;
         case "ArrowRight":
             keys.ArrowRight.pressed = false;
-            carBase.src = "jeep_1/idle.png"
+            carBase.src = "/jeep_1/idle.png"
             break;
         case "ArrowUp":
             keys.ArrowUp.pressed = false;
-            carBase.src = "jeep_1/idle.png"
+            carBase.src = "/jeep_1/idle.png"
             break;
         case "ArrowDown":
             keys.ArrowDown.pressed = false;
-            carBase.src = "jeep_1/idle.png"
+            carBase.src = "/jeep_1/idle.png"
             break;
     }
 })
@@ -511,7 +531,7 @@ canvas.addEventListener("click", (e) => {
     currentTimeStamp = e.timeStamp;
     if (gameOver === false) {
         if ((currentTimeStamp - lastTimeStamp) >= 175) {
-            playerMain.src = "soldierSprite/FireWizard/flame_jet.png"
+            playerMain.src = "/soldierSprite/FireWizard/flame_jet.png"
             let xPos = e.clientX - 100;
             let yPos = e.clientY - 50;
             const angle = Math.atan2(yPos - player1.position.y - 50, xPos - player1.position.x + 30)
@@ -525,7 +545,7 @@ canvas.addEventListener("click", (e) => {
     }
     lastTimeStamp = currentTimeStamp;
     setTimeout(() => {
-        playerMain.src = "soldierSprite/FireWizard/idle.png";
+        playerMain.src = "/soldierSprite/FireWizard/idle.png";
     }, 750)
 })
 //mouse shooting
@@ -539,7 +559,7 @@ window.addEventListener("keydown", (e) => {
             currentTimeStamp = e.timeStamp;
             if ((currentTimeStamp - lastTimeStamp) >= 100) {
                 keys.v.pressed = true;
-                playerMain.src = "soldierSprite/FireWizard/flame_jet.png"
+                playerMain.src = "/soldierSprite/FireWizard/flame_jet.png"
                 // let xPos = e.clientX - 100;
                 // let yPos = e.clientY - 50;
                 // const angle = Math.atan2(yPos - player1.position.y - (player1.area.width) / 2 - 30, xPos - player1.position.x - (player1.area.height) / 2 - 15)
@@ -556,7 +576,7 @@ window.addEventListener("keydown", (e) => {
     lastTimeStamp = currentTimeStamp;
 })
 function levelOverChecker() {
-    if (score >= 200) {
+    if (false) {
         levelUp = true;
         levelOverModal.showModal();
         setTimeout(() => {
@@ -565,7 +585,7 @@ function levelOverChecker() {
             enemies.forEach((Enemy) => {
                 Enemy.velocity.x = 0;
                 Enemy.maxFrame = 1;
-                enemies[enemies.indexOf(Enemy)].enemy.src = "enemies/GolemIdle.png";
+                enemies[enemies.indexOf(Enemy)].enemy.src = "/enemies/GolemIdle.png";
             })
             scoreModal.innerText = `${score}`
         }, 100)
@@ -573,4 +593,48 @@ function levelOverChecker() {
             overLine.classList.add("overLineScale")
         }, 1000)
     }
+}
+
+
+const time = document.querySelector(".time");
+let interval = null;
+// window.addEventListener("keydown", () => {
+//     if (interval) {
+//         return;
+//     }
+// }
+// )
+interval = setInterval(timer, 1000);
+function timer() {
+    seconds--;
+    let mins = Math.floor((seconds) / 60);
+    let secs = (seconds - (mins * 60)) % 60;
+    if (secs < 10) {
+        secs = "0" + secs;
+    }
+    if (mins < 10) {
+        mins = "0" + mins;
+    }
+    time.innerText = `${mins}:${secs}`;
+}
+// function getTimerText() {
+//     if (seconds <= 0) {
+//         seconds = 0;
+//         clearInterval(interval);
+//         interval = null;
+//         return true;
+//     } if (time.innerText === "00:00") {
+//         seconds = 0;
+//         clearInterval(interval);
+//         interval = null;
+//         return true;
+//     }
+// }
+function nextWave() {
+    if (seconds <= 0) {
+        seconds = 60;
+        enemy1.src = "../enemies/FrostGuardian/walk.png"
+        spawnEnemies2();
+    }
+
 }

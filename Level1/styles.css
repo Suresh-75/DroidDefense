@@ -25,6 +25,11 @@ body {
     justify-content: space-around;
 }
 
+/* 
+.time {
+    p
+} */
+
 .gameStartIntro {
     position: fixed;
     color: rgb(212, 20, 20);
@@ -180,7 +185,9 @@ body {
 
 @font-face {
     font-family: "raphia";
+
     src: url(fonts/raphia-font/RaphiaPersonalUse-gxe8E.otf);
+    src: url(../Assets/soldierSprite/FireWizard/Idle.png);
 }
 
 @font-face {

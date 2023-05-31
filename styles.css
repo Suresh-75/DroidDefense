@@ -131,8 +131,7 @@ body {
 .locationBtn,
 .locationBtn2,
 .locationBtn3,
-.locationBtn4,
-.locationBtn5 {
+.locationBtn4 {
     position: absolute;
     top: 25%;
     right: 50%;
@@ -158,11 +157,6 @@ body {
 }
 
 .locationBtn4 {
-    top: 70%;
-    right: 62%;
-}
-
-.locationBtn5 {
     top: 75%;
     right: 48%;
 }

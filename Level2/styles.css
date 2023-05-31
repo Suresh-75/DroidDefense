@@ -23,6 +23,8 @@ body {
     width: 100%;
     display: flex;
     justify-content: space-around;
+    font-family: "idle";
+    letter-spacing: 2px;
 }
 
 .gameStartIntro {
@@ -36,18 +38,12 @@ body {
     transition: 0.7s;
 }
 
-.notShow {
-    transform: translateY(-800px) scale(0);
-}
-
 .number3,
 .number2,
 .number1 {
     transform: scale(0);
     transition: 0.3s;
     position: fixed;
-    color: rgb(255, 255, 255);
-    text-shadow: 0px 0px 20px rgb(21, 21, 21);
     color: rgb(22, 125, 215);
     text-shadow: 0px 0px 5px rgb(21, 21, 21);
     font-size: 7rem;
@@ -66,11 +62,35 @@ body {
     letter-spacing: 2px;
 }
 
-.show {
-    transform: scale(1);
-    display: inline-block;
+.wave2 {
+    position: fixed;
+    color: white;
+    font-size: 7rem;
+    font-weight: bolder;
+    top: -50%;
+    font-family: "halloween";
+    color: rgb(21, 135, 164);
+    text-shadow: 0px 0px 10px rgb(0, 0, 0);
 }
 
+.show {
+    transform: scale(1);
+    /* display: inline-block; */
+}
+
+.wave2Show {
+    transition: 1s;
+    top: 40%;
+}
+
+.wave2Remove {
+    transition: 0.2s;
+    top: 100%;
+}
+
+.notShow {
+    transform: translateY(-800px) scale(0);
+}
 
 .levelOverModal {
     /* display: unset; */
@@ -196,4 +216,14 @@ body {
 @font-face {
     font-family: "idle";
     src: url(fonts/ode-to-idle-gaming-font/OdeToIdleGaming-R8EM.ttf);
+}
+
+@font-face {
+    font-family: "halloween";
+    src: url(fonts/halloween-slime-font/HalloweenSlimePersonalUse-4B80D.otf);
+}
+
+@font-face {
+    font-family: "knuckles";
+    src: url(fonts/azn-knuckles-trial-font/AznKnucklesTrial-z85pa.otf);
 }
