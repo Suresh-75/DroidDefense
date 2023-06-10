@@ -10,6 +10,46 @@
 </head>
 
 <body>
+    <dialog class="gameSettingsModal">
+        <div class="settingsModal">
+            <section class="settingsContainer">
+                <p class="settingsText">SETTINGS</p>
+                <button class="settingsExitBtn"><img src="images/fast-forward.png" alt=""></button>
+                <section class="settingsButtonsContainer">
+                    <section class="settingsButtons">
+                        <button class="controlBtn">CONTROLS</button>
+                        <button class="levelBtn">GAME</button>
+                    </section>
+                    <main class="settingsGameControls">
+                        <span>
+                            <img class="arrowControls" src="images\arrowKeys.png" alt="">
+                            <p>BASE MOVEMENTS</p>
+                        </span>
+                        <span id="mouseControl">
+                            <p class="mouseShoot">SHOOT</p>
+                            <img class="mouseLeftClick" src="images\image.png" alt="">
+                        </span>
+                        <span>
+                            <img class="wasdControls" src="images\wasd.png" alt="">
+                            <p>PLAYER MOVEMENTS</p>
+                        </span>
+                    </main>
+                    <main class="settingsLevelInfo hideSettingsMenu">
+                        <p class="levelInfoText">PROTECT THE BASE FROM THE MONSTERS TILL THE TIMER RUNS OUT, THE GAME
+                            ENDS IF THE PLAYER DIES OR THE BASE IS DESTROYED
+                        </p>
+                        <section>
+                            <button class="restartBtn">RESTART</button>
+                            <main>
+                                <span class="settingsMusicLabel">MUSIC</span>
+                                <button class="settingsMusicIcon"><img src="images/music.png" alt=""></button>
+                            </main>
+                        </section>
+                    </main>
+                </section>
+            </section>
+        </div>
+    </dialog>
     <section class="navBar">
         <div class="score">
             <span>SCORE : <span class="scoreValue">0</span></span>
@@ -17,9 +57,12 @@
             <span>HIGH-SCORE : <span class="highScoreValue">0</span></span>
         </div>
         <div>
-            <span>ENERGY-ORBS : <span>0</span></span>
-            <br>
             <span class="time">00:00</span>
+        </div>
+        <div class="settingsDiv">
+            <button class="settingsBtn">
+                <img src="PNG/settings.png" alt="">
+            </button>
         </div>
     </section>
     <div class="gameStartIntro">
@@ -31,16 +74,31 @@
     <dialog class="levelOverModal">
         <section class="modalContainer">
             <p class="levelOverText">MISSION-02</p>
-            <span class="overLine"></span>
+            <span class="overLine"><span class="arrowHeart">&#8227;</span></span>
             <span class="levelUpScore">SCORE : <span class="scoreModal"></span></span>
             <div class="btnsMOdal">
                 <a href="../index.html" class="mapModal">GAME-MAP</a>
-                <a class="nextLevelModal">CONTINUE</a>
+                <a href="../Level2/level2.html" class="nextLevelModal">CONTINUE</a>
             </div>
         </section>
     </dialog>
-    <div class="wave2">SEA - KING ! ! !</div>
+    <dialog class="gameOverModal">
+        <section class="gameOverModalContainer">
+            <span class="gameOverModalText">GAME OVER</span>
+            <span class="levelUpScore2">SCORE : <span class="scoreModal2"></span></span>
+            <div class="btnsMOdal">
+                <a href="../index.html" class="mapModal">GAME-MAP</a>
+                <button class="playAgainModal">TRY AGAIN</button>
+            </div>
+        </section>
+    </dialog>
+    <div class="wave2">SEA-KING !!!</div>
     <canvas id="canvas"></canvas>
+    <section class="footerPlayerLife">
+        <img class="playerLife" src="PNG\playerTag.png" alt="">
+        <img class="playerLifeProfile" src="PNG\player.png" alt="">
+    </section>
+
     <script src="main.js"></script>
 </body>
 

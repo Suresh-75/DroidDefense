@@ -1,4 +1,3 @@
-
 const canvas = document.getElementById("canvas");
 const gameStartIntro = document.querySelector(".gameStartIntro")
 const number3 = document.querySelector(".number3")
@@ -6,9 +5,64 @@ const number2 = document.querySelector(".number2")
 const number1 = document.querySelector(".number1")
 const levelOverModal = document.querySelector(".levelOverModal")
 const scoreModal = document.querySelector(".scoreModal")
+const scoreModal2 = document.querySelector(".scoreModal2")
 const overLine = document.querySelector(".overLine")
+const seaKingWave = document.querySelector(".wave2")
+const gameOverModal = document.querySelector(".gameOverModal")
+const playAgainModal = document.querySelector(".playAgainModal")
+const settingsBtn = document.querySelector(".settingsBtn")
+const gameSettingsModal = document.querySelector(".gameSettingsModal")
+//settingsModal
+const levelBtn = document.querySelector(".levelBtn")
+const controlBtn = document.querySelector(".controlBtn")
+const settingsGameControls = document.querySelector(".settingsGameControls")
+const settingsLevelInfo = document.querySelector(".settingsLevelInfo")
+const settingsExitBtn = document.querySelector(".settingsExitBtn")
+
+settingsBtn.addEventListener("click", () => {
+    gameSettingsModal.showModal();
+    pause = true;
+    clearInterval(spawnEnemy);
+    spawnEnemy = null;
+    enemies.forEach((enemy) => {
+        enemy.velocity.x = 0;
+    })
+})
+
+function pauseClearInterval() {
+    if (pause === true) {
+        clearInterval(spawnEnemy);
+        spawnEnemy = null;
+    } else {
+        return;
+    }
+}
+controlBtn.classList.add("zIndex");
+levelBtn.addEventListener("click", () => {
+    settingsGameControls.classList.add("hideSettingsMenu");
+    levelBtn.classList.add("zIndex");
+    settingsLevelInfo.classList.remove("hideSettingsMenu");
+    controlBtn.classList.remove("zIndex");
+})
+controlBtn.addEventListener("click", () => {
+    settingsLevelInfo.classList.add("hideSettingsMenu");
+    controlBtn.classList.add("zIndex");
+    settingsGameControls.classList.remove("hideSettingsMenu");
+    levelBtn.classList.remove("zIndex");
+})
+settingsExitBtn.addEventListener("click", () => {
+    enemies.forEach((enemy) => {
+        enemy.velocity.x = -0.5;
+    })
+    gameSettingsModal.close();
+    pause = false;
+    spawnEnemies()
+})
+
+let dragon = false;
 let c = canvas.getContext("2d");
-let seconds = 10;
+let seconds = 60;
+let pause = false;
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
@@ -32,19 +86,143 @@ let frame = 0;
 let score = 0;
 let spawnEnemy = null;
 const playerMain = new Image();
-playerMain.src = "soldierSprite/FireWizard/Idle.png"
+playerMain.src = "soldierSprite/FireWizard/idle.png"
 const backgroundImg = new Image();
-let backgroundImgGame = "PNG/game_background_4/game_background_4.png";
-
-
-backgroundImg.src = backgroundImgGame;
+backgroundImg.src = "PNG/game_background_4/game_background_4.png"
 const scoreBoard = document.querySelector(".scoreValue");
 let gameOver = false;
 let levelUp = false;
 let enemyTypes = []
 const enemy1 = new Image();
-enemy1.src = "/enemies/spritesheet.png"
+enemy1.src = "enemies/spritesheet.png"
 enemyTypes.push(enemy1);
+
+let seaKing = new Image()
+seaKing.src = "enemies/Dragon/walk2.png"
+
+const healthBarplayer = new Image();
+healthBarplayer.src = "healthBar/Border_Style_2.png"
+const healthBarBase = new Image();
+healthBarBase.src = "healthBar/Border_Style_3.png"
+const healthBarMonster = new Image();
+healthBarMonster.src = "healthBar/Border_Style_4.png"
+
+function wavesBar() {
+    c.beginPath();
+    c.fillStyle = "orange";
+    c.roundRect(790, 16, 310, 35, [30, 30, 30, 30])
+    c.fill();
+    c.beginPath();
+    c.fillStyle = "red";
+    c.roundRect(795, 21, 300, 25, [30, 30, 30, 30])
+    c.stroke();
+    c.beginPath();
+    c.fillStyle = "red";
+    c.roundRect(795, 21, score, 25, [30, 0, 0, 30])
+    c.fill();
+}
+
+class MonsterEnemy {
+    constructor(position, velocity, area) {
+        this.position = position;
+        this.velocity = velocity;
+        this.area = area
+        this.enemy = seaKing;
+        this.healthBar = healthBarMonster;
+        this.frameX = 0;
+        this.frameY = 0;
+        this.minFrame = 0
+        this.maxFrame = 15;
+        this.spriteWidth = 447;
+        this.spriteHeight = 447;
+        this.health = 250;
+    }
+    draw() {
+        // c.fillStyle = "green";
+        // c.fillRect(this.position.x, this.position.y, this.area.width, this.area.height)
+        c.drawImage(this.enemy, 140, this.frameX * (this.spriteWidth), this.spriteWidth + 100, this.spriteHeight, this.position.x, this.position.y, this.area.width, this.area.height);
+        c.drawImage(this.healthBar, 0, 0, 500, 50, this.position.x + 147, this.position.y + 33, 255, 20)
+        // c.fillStyle = "black"
+        // c.fillRect(this.position.x + 145, this.position.y + 35, 255, 20)
+        c.fillStyle = "red"
+        c.fillRect(this.position.x + 150, this.position.y + 35, 250, 15)
+        c.fillStyle = "gold"
+        c.fillRect(this.position.x + 150, this.position.y + 35, this.health, 15)
+        c.beginPath()
+        // c.arc(this.position.x, this.position.y, 10, 0, Math.PI * 2, false)
+        c.ellipse(this.position.x + 200, this.position.y + 352, 100, 3, 0, Math.PI * 2, false)
+        c.fillStyle = "black";
+        c.fill();
+    }
+    update() {
+        this.draw();
+        if (frame % 15 === 0) {
+            if (this.frameX < this.maxFrame) {
+                this.frameX++;
+            } else {
+                this.frameX = this.minFrame;
+            }
+        }
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+    }
+}
+let monsterEnemy = []
+const levelOverText = document.querySelector(".levelOverText")
+function nextWave() {
+    if (seconds <= 0 && gameOver === false) {
+        seconds = 0;
+        clearInterval(interval);
+        interval = null;
+        levelOverModal.showModal();
+        setTimeout(() => {
+            clearInterval(spawnEnemy);
+            spawnEnemy = null;
+            enemies.forEach((Enemy) => {
+                Enemy.velocity.x = 0;
+                Enemy.maxFrame = 1;
+                enemies[enemies.indexOf(Enemy)].enemy.src = "enemies/GolemIdle.png";
+            })
+            scoreModal.innerText = `${score}`
+        }, 100)
+        setTimeout(() => {
+            overLine.classList.add("overLineScale");
+            setTimeout(() => {
+                levelOverText.classList.add("levelOverTextMove");
+            }, 500);
+            setTimeout(() => {
+                levelOverText.classList.remove("levelOverTextMove");
+            }, 550);
+        }, 1000)
+
+        // dragon = true;
+        // seconds = 60;
+        // clearInterval(spawnEnemy);
+        // spawnEnemy = null;
+        // let position = { x: canvas.width - 700, y: 100 }
+        // // let velocity = { x: -0.2, y: 0 };
+        // let yPos = player1.position.y;
+        // let xPos = player1.position.x;
+        // let xPos2 = 0;
+        // let yPos2 = 0;
+        // monsterEnemy.forEach((enemy) => {
+        //     yPos2 = enemy.position.y;
+        //     xPos2 = enemy.position.x
+        // })
+        // let angle = Math.atan2(yPos2 - yPos, xPos - xPos2)
+        // const velocity = {
+        //     x: Math.sin(angle),
+        //     y: -Math.cos(angle)
+        // }
+        // let area = { width: 500, height: 450 };
+        // seaKingWave.classList.add("wave2Show")
+        // setTimeout(() => {
+        //     monsterEnemy.push(new MonsterEnemy(position, velocity, area))
+        //     seaKingWave.classList.add("wave2Remove")
+        // }, 2000)
+    }
+}
+
 
 class Player {
     constructor(position, velocity, area) {
@@ -52,6 +230,7 @@ class Player {
         this.velocity = velocity;
         this.area = area;
         this.player = playerMain;
+        this.healthBar = healthBarplayer;
         this.frameX = 0;
         this.frameY = 0;
         this.minFrame = 0
@@ -62,15 +241,18 @@ class Player {
     }
     draw() {
         c.drawImage(this.player, this.frameX * (this.spriteWidth), 30, this.spriteWidth, this.spriteHeight, this.position.x, this.position.y, this.area.width, this.area.height)
-        c.fillStyle = "black"
-        c.fillRect(this.position.x + 47, this.position.y + 22.5, 105, 15);
+        // c.drawImage(this.healthBar, 0, 0, 500, 50, this.position.x + 47, this.position.y + 22.5, 105, 15)
         c.fillStyle = "red"
-        c.fillRect(this.position.x + 50, this.position.y + 25, 100, 10);
+        c.fillRect(155, 652, 150, 22);
         c.fillStyle = "green"
-        c.fillRect(this.position.x + 50, this.position.y + 25, this.health, 10);
+        c.fillRect(155, 652, (this.health) * 150 / 100, 22);
+        c.fillStyle = "black"
+        c.fillRect(155, 676, 65, 12);
+        c.fillStyle = "orange"
+        c.fillRect(155, 676, 65, 12);
         c.beginPath()
         // c.arc(this.position.x, this.position.y, 10, 0, Math.PI * 2, false)
-        c.ellipse(this.position.x + 90, this.position.y + 190, 25, 2, 0, Math.PI * 2, false)
+        c.ellipse(this.position.x + 100, this.position.y + 192, 30, 3, 0, Math.PI * 2, false)
         c.fillStyle = "black";
         c.fill();
     }
@@ -92,7 +274,7 @@ class Player {
         if (gameOver === true) {
             this.frameX = 3;
             this.maxFrame = 3;
-            playerMain.src = "/soldierSprite/FireWizard/dead.png"
+            playerMain.src = "soldierSprite/FireWizard/dead.png"
         }
     }
 }
@@ -125,8 +307,9 @@ const keys = {
         pressed: false
     }
 }
+
 let ProjectileCharge1 = new Image()
-ProjectileCharge1.src = "/soldierSprite/FireWizard/Charge.png"
+ProjectileCharge1.src = "soldierSprite/FireWizard/Charge.png"
 let Projectiles = [];
 class Projectile {
     constructor(position, velocity, radius) {
@@ -171,7 +354,7 @@ class Enemy {
         this.frameX = 0;
         this.frameY = 0;
         this.minFrame = 0
-        this.maxFrame = 0;
+        this.maxFrame = 7;
         this.spriteWidth = 160;
         this.spriteHeight = 160;
         this.health = 100;
@@ -212,45 +395,32 @@ function randomYposition() {
     }
 }
 function spawnEnemies() {
-    setTimeout(() => {
-        spawnEnemy = setInterval(() => {
-            let area = { width: 250, height: 250 }
-            let yPos = randomYposition();
-            let position = { x: canvas.width, y: yPos }
-            // const angle = Math.atan2(yPos - player1.position.y, xPos - player1.position.x)
-            // const velocity = {
-            //     x: 12 * (Math.cos(angle)),
-            //     y: 12 * (Math.sin(angle))
-            // }
-            let velocity = { x: -0.75, y: 0 }
-            enemies.push(new Enemy(position, velocity, area))
-        }, 2500)
-    }, 1500)
-}
-function spawnEnemies2() {
-    setTimeout(() => {
-        spawnEnemy = setInterval(() => {
-            let area = { width: 192, height: 128 }
-            let yPos = randomYposition();
-            let position = { x: 500, y: 500 }
-            // const angle = Math.atan2(yPos - player1.position.y, xPos - player1.position.x)
-            // const velocity = {
-            //     x: 12 * (Math.cos(angle)),
-            //     y: 12 * (Math.sin(angle))
-            // }
-            let velocity = { x: -0.75, y: 0 }
-            enemies.push(new Enemy(position, velocity, area))
-        }, 2500)
-    }, 0)
+    if (pause === false) {
+        setTimeout(() => {
+            spawnEnemy = setInterval(() => {
+                let area = { width: 250, height: 250 }
+                let yPos = randomYposition();
+                let position = { x: canvas.width, y: yPos }
+                // const angle = Math.atan2(yPos - player1.position.y, xPos - player1.position.x)
+                // const velocity = {
+                //     x: 12 * (Math.cos(angle)),
+                //     y: 12 * (Math.sin(angle))
+                // }
+                let velocity = { x: -0.5, y: 0 }
+                enemies.push(new Enemy(position, velocity, area))
+            }, 2500)
+        }, 1500)
+    }
 }
 let carBase = new Image()
-carBase.src = "/jeep_1/idle.png"
+carBase.src = "jeep_1/idle.png"
 class Base {
     constructor(position, area, velocity) {
         this.position = position;
         this.velocity = velocity;
         this.area = area
         this.car = carBase;
+        this.healthBar = healthBarBase;
         this.frameX = 0;
         this.frameY = 0;
         this.minFrame = 0;
@@ -260,16 +430,24 @@ class Base {
         this.health = 100;
     }
     draw() {
+        // c.drawImage(this.healthBar, 0, 0, 500, 50, this.position.x + 53, this.position.y + 188, 154, 15)
         c.drawImage(this.car, this.frameX * (this.spriteWidth), 0, this.spriteWidth, this.spriteHeight, this.position.x, this.position.y, this.area.width, this.area.height)
         c.beginPath()
         c.ellipse(this.position.x + 125, this.position.y + 350, 100, 5, 0, Math.PI * 2, false);
         c.fillStyle = "black";
         c.fill();
-        c.fillRect(this.position.x + 52, this.position.y + 189, 155, 15)
-        c.fillStyle = "red";
-        c.fillRect(this.position.x + 55, this.position.y + 190, 150, 10)
-        c.fillStyle = "green";
-        c.fillRect(this.position.x + 55, this.position.y + 190, (this.health) * 150 / 100, 10)
+        c.beginPath();
+        c.fillStyle = "#a2d2ff";
+        c.roundRect(395, 16, 310, 35, [20, 20, 20, 20])
+        c.fill();
+        c.beginPath();
+        c.fillStyle = "#0077b6";
+        c.roundRect(400, 21, 300, 25, [20, 20, 20, 20])
+        c.fill();
+        c.beginPath();
+        c.fillStyle = "#a2d2ff";
+        c.roundRect(400, 21, (100 - this.health) * (300) / 100, 25, [0, 0, 0, 0])
+        c.fill();
     }
     update() {
         this.draw();
@@ -291,8 +469,41 @@ const base = new Base(
 )
 const player1 = new Player({ x: 50, y: 350 }, { x: 0, y: 0 }, { width: 250, height: 250 })
 // let porjectile1 = new Projectile({ x: player1.position.x + (player1.area.width) / 2, y: player1.position.y + (player1.area.height) / 2 }, { x: 0, y: 0 })
-
-
+function monsterMovement() {
+    if (dragon === true) {
+        let yPos = player1.position.y;
+        let xPos = player1.position.x;
+        let yPos2 = monsterEnemy[0].position.y
+        let xPos2 = monsterEnemy[0].position.x
+        let angle = Math.atan2(yPos - yPos2 - 160, xPos2 - xPos - 100)
+        // let interval = null
+        const velocity = {
+            x: 0.25 * (-Math.cos(angle)),
+            y: 0.25 * (Math.sin(angle))
+        }
+        if ((xPos2 - xPos < 225) && (Math.abs(yPos - yPos2) < 250)) {
+            player1.maxFrame = 2;
+            seaKing.src = "enemies/Dragon/attack.png"
+            monsterEnemy[0].maxFrame = 9;
+        }
+        if ((xPos2 - xPos < 101) && (Math.abs(yPos - yPos2) < 250)) {
+            playerMain.src = "soldierSprite/FireWizard/Hurt.png"
+            setTimeout(() => {
+                player1.health -= 10;
+            }, 250)
+            player1.position.x = monsterEnemy[0].position.x - 200;
+        }
+        if (xPos2 - xPos > 250) {
+            // playerMain.src = "soldierSprite/FireWizard/idle.png"
+            player1.maxFrame = 6;
+            seaKing.src = "enemies/Dragon/walk2.png"
+            monsterEnemy[0].maxFrame = 15;
+            // clearInterval(interval);
+            // interval = null;
+        }
+        monsterEnemy[0].velocity = velocity;
+    }
+}
 function animate() {
     window.requestAnimationFrame(animate);
     c.clearRect(0, 0, canvas.width, canvas.height)
@@ -312,13 +523,13 @@ function animate() {
             //  }
             if (collisionChecker(Projectile.position, Enemy.position)) {
                 // enemy1.src = "enemies/GolemDeath.png"
-                Enemy.health -= 20;
+                Enemy.health -= 10;
                 // enemies[enemies.indexOf(Enemy)].enemy.src = "enemies/GolemHit.png";
                 // setTimeout(() => {
                 //     enemies[enemies.indexOf(Enemy)].enemy.src = "enemies/spritesheet.png";
                 // }, 1000)
                 setTimeout(() => {
-                    player1.player.src = "/soldierSprite/FireWizard/idle.png"
+                    player1.player.src = "soldierSprite/FireWizard/idle.png"
                 }, 1000)
                 Projectiles.splice(Projectiles.indexOf(Projectile), 1);
                 if (Enemy.health <= 0) {
@@ -327,6 +538,16 @@ function animate() {
                 }
             }
         })
+        monsterEnemy.forEach((enemy) => {
+            if (MonstercollisionChecker(Projectile.position, enemy.position)) {
+                enemy.health -= 5;
+                Projectiles.splice(Projectiles.indexOf(Projectile), 1);
+                if (enemy.health <= 0) {
+                    monsterEnemy.splice(monsterEnemy.indexOf(enemy), 1);
+                }
+            }
+        })
+
     })
     enemies.forEach((Enemy) => {
         if (playerCollisionChecker(player1.position, Enemy.position)) {
@@ -338,15 +559,19 @@ function animate() {
             enemies.splice(enemies.indexOf(Enemy), 1)
             if (player1.health <= 0) {
                 gameOver = true;
+                scoreModal2.innerText = `${score}`
+                clearInterval(interval);
+                interval = null;
+                gameOverModal.showModal();
                 enemies.forEach((Enemy) => {
                     Enemy.maxFrame = 1;
                 })
                 clearInterval(spawnEnemy);
                 spawnEnemy = null;
-                player1.player.src = "/soldierSprite/FireWizard/dead.png"
+                player1.player.src = "soldierSprite/FireWizard/dead.png"
                 enemies.forEach((Enemy) => {
                     Enemy.velocity.x = 0;
-                    enemies[enemies.indexOf(Enemy)].enemy.src = "/enemies/GolemIdle.png";
+                    enemies[enemies.indexOf(Enemy)].enemy.src = "enemies/GolemIdle.png";
                     // Enemy.src = "soldierSprite/Soldier_1/GolemIdle.png"
                 })
             }
@@ -359,10 +584,11 @@ function animate() {
                 clearInterval(spawnEnemy);
                 spawnEnemy = null;
                 base.maxFrame = 8;
-                base.car.src = "/Jeep_1/Destroyed.png"
+                gameOverModal.showModal();
+                base.car.src = "Jeep_1/Destroyed.png"
                 enemies.forEach((Enemy) => {
                     Enemy.velocity.x = 0;
-                    enemies[enemies.indexOf(Enemy)].enemy.src = "/enemies/GolemIdle.png";
+                    enemies[enemies.indexOf(Enemy)].enemy.src = "enemies/GolemIdle.png";
                     // Enemy.src = "soldierSprite/Soldier_1/GolemIdle.png"
                 })
             }
@@ -378,44 +604,61 @@ function animate() {
     base.velocity.y = 0;
     if (gameOver === false) {
         if (keys.a.pressed && (player1.position.x > 0)) {
-            playerMain.src = "/soldierSprite/Soldier_1/RunRev.png"
+            playerMain.src = "soldierSprite/FireWizard/RunRev.png"
             player1.velocity.x = -1.5
         }
         if (keys.d.pressed && (player1.position.x + player1.area.width < canvas.width)) {
-            playerMain.src = "/soldierSprite/FireWizard/run.png"
+            playerMain.src = "soldierSprite/FireWizard/run.png"
             player1.velocity.x = 1.5
         }
         if (keys.w.pressed && (player1.position.y > 0)) {
-            playerMain.src = "/soldierSprite/FireWizard/run.png"
+            playerMain.src = "soldierSprite/FireWizard/run.png"
             player1.velocity.y = -1.5
         }
         if (keys.s.pressed && (player1.position.y + player1.area.height < canvas.height)) {
-            playerMain.src = "/soldierSprite/FireWizard/run.png"
+            playerMain.src = "soldierSprite/FireWizard/run.png"
             player1.velocity.y = 1.5
         }
         if (keys.ArrowLeft.pressed && (base.position.x > 0)) {
-            carBase.src = "/Jeep_1/Ride_back.png"
+            carBase.src = "Jeep_1/Ride_back.png"
             base.velocity.x = -2
         }
         if (keys.ArrowRight.pressed && (base.position.x + base.area.width < canvas.width)) {
-            carBase.src = "/Jeep_1/Ride.png"
+            carBase.src = "Jeep_1/Ride.png"
             base.velocity.x = 2
         }
         if (keys.ArrowUp.pressed && (base.position.y > 0)) {
-            carBase.src = "/Jeep_1/Ride.png"
+            carBase.src = "Jeep_1/Ride.png"
             base.velocity.y = -2
         }
         if (keys.ArrowDown.pressed && (base.position.y + base.area.height < canvas.height)) {
-            carBase.src = "/Jeep_1/Ride.png"
+            carBase.src = "Jeep_1/Ride.png"
             base.velocity.y = 2
         }
     }
     frame++;
     levelOverChecker()
     nextWave()
+    monsterMovement()
+    monsterEnemy.forEach((enemy) => {
+        enemy.update();
+    })
+    wavesBar()
+    pauseClearInterval()
 }
 animate()
 spawnEnemies()
+
+function MonstercollisionChecker(bullet, enemy1) {
+    if (!(
+        bullet.x > enemy1.x + 300 ||
+        bullet.x + 5 < enemy1.x ||
+        bullet.y > enemy1.y + 300 ||
+        bullet.y + 5 < enemy1.y)
+    ) {
+        return true;
+    }
+}
 function baseCollisionChecker(base, Enemy) {
     if (!(
         base.x > Enemy.x + 150 ||
@@ -484,39 +727,39 @@ window.addEventListener("keyup", (e) => {
     switch (e.key) {
         case "a":
             keys.a.pressed = false;
-            playerMain.src = "/soldierSprite/FireWizard/idle.png"
+            playerMain.src = "soldierSprite/FireWizard/idle.png"
             break;
         case "d":
             keys.d.pressed = false;
-            playerMain.src = "/soldierSprite/FireWizard/idle.png"
+            playerMain.src = "soldierSprite/FireWizard/idle.png"
             break;
         case "w":
             keys.w.pressed = false;
-            playerMain.src = "/soldierSprite/FireWizard/idle.png"
+            playerMain.src = "soldierSprite/FireWizard/idle.png"
             break;
         case "s":
             keys.s.pressed = false;
-            playerMain.src = "/soldierSprite/FireWizard/idle.png"
+            playerMain.src = "soldierSprite/FireWizard/idle.png"
             break;
         case "b":
             keys.v.pressed = false;
-            playerMain.src = "/soldierSprite/FireWizard/idle.png"
+            playerMain.src = "soldierSprite/FireWizard/idle.png"
             break;
         case "ArrowLeft":
             keys.ArrowLeft.pressed = false;
-            carBase.src = "/jeep_1/idle.png"
+            carBase.src = "jeep_1/idle.png"
             break;
         case "ArrowRight":
             keys.ArrowRight.pressed = false;
-            carBase.src = "/jeep_1/idle.png"
+            carBase.src = "jeep_1/idle.png"
             break;
         case "ArrowUp":
             keys.ArrowUp.pressed = false;
-            carBase.src = "/jeep_1/idle.png"
+            carBase.src = "jeep_1/idle.png"
             break;
         case "ArrowDown":
             keys.ArrowDown.pressed = false;
-            carBase.src = "/jeep_1/idle.png"
+            carBase.src = "jeep_1/idle.png"
             break;
     }
 })
@@ -531,21 +774,23 @@ canvas.addEventListener("click", (e) => {
     currentTimeStamp = e.timeStamp;
     if (gameOver === false) {
         if ((currentTimeStamp - lastTimeStamp) >= 175) {
-            playerMain.src = "/soldierSprite/FireWizard/flame_jet.png"
             let xPos = e.clientX - 100;
             let yPos = e.clientY - 50;
             const angle = Math.atan2(yPos - player1.position.y - 50, xPos - player1.position.x + 30)
-            const velocity = {
-                x: 10 * (Math.cos(angle)),
-                y: 10 * (Math.sin(angle))
+            if (angle > -0.5 && angle < 0.7) {
+                playerMain.src = "soldierSprite/FireWizard/flame_jet.png"
+                const velocity = {
+                    x: 10 * (Math.cos(angle)),
+                    y: 10 * (Math.sin(angle))
+                }
+                let radius = 150;
+                Projectiles.push(new Projectile({ x: player1.position.x, y: player1.position.y + (player1.area.height) / 2 - 40 }, { x: velocity.x, y: velocity.y }, radius))
             }
-            let radius = 150;
-            Projectiles.push(new Projectile({ x: player1.position.x + (player1.area.width) / 2 + 50, y: player1.position.y + (player1.area.height) / 2 - 40 }, { x: velocity.x, y: velocity.y }, radius))
         }
     }
     lastTimeStamp = currentTimeStamp;
     setTimeout(() => {
-        playerMain.src = "/soldierSprite/FireWizard/idle.png";
+        playerMain.src = "soldierSprite/FireWizard/idle.png";
     }, 750)
 })
 //mouse shooting
@@ -559,7 +804,7 @@ window.addEventListener("keydown", (e) => {
             currentTimeStamp = e.timeStamp;
             if ((currentTimeStamp - lastTimeStamp) >= 100) {
                 keys.v.pressed = true;
-                playerMain.src = "/soldierSprite/FireWizard/flame_jet.png"
+                playerMain.src = "soldierSprite/FireWizard/flame_jet.png"
                 // let xPos = e.clientX - 100;
                 // let yPos = e.clientY - 50;
                 // const angle = Math.atan2(yPos - player1.position.y - (player1.area.width) / 2 - 30, xPos - player1.position.x - (player1.area.height) / 2 - 15)
@@ -585,7 +830,7 @@ function levelOverChecker() {
             enemies.forEach((Enemy) => {
                 Enemy.velocity.x = 0;
                 Enemy.maxFrame = 1;
-                enemies[enemies.indexOf(Enemy)].enemy.src = "/enemies/GolemIdle.png";
+                enemies[enemies.indexOf(Enemy)].enemy.src = "enemies/GolemIdle.png";
             })
             scoreModal.innerText = `${score}`
         }, 100)
@@ -594,7 +839,6 @@ function levelOverChecker() {
         }, 1000)
     }
 }
-
 
 const time = document.querySelector(".time");
 let interval = null;
@@ -605,8 +849,16 @@ let interval = null;
 // }
 // )
 interval = setInterval(timer, 1000);
+
+function addedSeconds() {
+    if (pause === true) {
+        seconds += 0;
+    } else {
+        seconds--;
+    }
+}
 function timer() {
-    seconds--;
+    addedSeconds();
     let mins = Math.floor((seconds) / 60);
     let secs = (seconds - (mins * 60)) % 60;
     if (secs < 10) {
@@ -617,6 +869,10 @@ function timer() {
     }
     time.innerText = `${mins}:${secs}`;
 }
+
+playAgainModal.addEventListener("click", () => {
+    location.reload()
+})
 // function getTimerText() {
 //     if (seconds <= 0) {
 //         seconds = 0;
@@ -630,11 +886,7 @@ function timer() {
 //         return true;
 //     }
 // }
-function nextWave() {
-    if (seconds <= 0) {
-        seconds = 60;
-        enemy1.src = "../enemies/FrostGuardian/walk.png"
-        spawnEnemies2();
-    }
 
-}
+
+
+

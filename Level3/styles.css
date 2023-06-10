@@ -13,8 +13,9 @@ body {
     height: 100vh;
 }
 
+
 .navBar {
-    background-color: rgba(29, 29, 28, 0.851);
+    background-color: rgba(29, 29, 28, 0.177);
     padding: 1rem;
     font-weight: bolder;
     position: absolute;
@@ -23,11 +24,14 @@ body {
     width: 100%;
     display: flex;
     justify-content: space-around;
+    font-family: "idle";
+    letter-spacing: 2px;
+    height: 5%;
 }
 
 .gameStartIntro {
     position: fixed;
-    color: rgb(212, 154, 20);
+    color: rgb(218, 207, 53);
     text-shadow: 0px 0px 20px black;
     font-size: 4rem;
     font-weight: bolder;
@@ -36,19 +40,13 @@ body {
     transition: 0.7s;
 }
 
-.notShow {
-    transform: translateY(-800px) scale(0);
-}
-
 .number3,
 .number2,
 .number1 {
     transform: scale(0);
     transition: 0.3s;
     position: fixed;
-    color: rgb(255, 255, 255);
-    text-shadow: 0px 0px 20px rgb(21, 21, 21);
-    color: rgb(22, 125, 215);
+    color: rgb(224, 53, 99);
     text-shadow: 0px 0px 5px rgb(21, 21, 21);
     font-size: 7rem;
     font-weight: bolder;
@@ -66,24 +64,124 @@ body {
     letter-spacing: 2px;
 }
 
-.show {
-    transform: scale(1);
-    display: inline-block;
+.wave2 {
+    position: fixed;
+    color: white;
+    font-size: 7rem;
+    font-weight: bolder;
+    top: -50%;
+    font-family: "halloween";
+    color: rgb(164, 21, 21);
+    text-shadow: 0px 0px 10px rgb(0, 0, 0);
 }
 
+.show {
+    transform: scale(1);
+    /* display: inline-block; */
+}
+
+.wave2Show {
+    transition: 1s;
+    top: 40%;
+}
+
+.wave2Remove {
+    transition: 0.2s;
+    top: 100%;
+}
+
+.notShow {
+    transform: translateY(-800px) scale(0);
+}
+
+.gameOverModal {
+    filter: drop-shadow(0px 0px 50px #000000);
+    background: url(PNG/gameOverModal.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: rgb(9, 8, 8);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem 2rem;
+    height: 52%;
+    width: 32%;
+    border: none;
+    border-radius: 0.5rem;
+    /* background: linear-gradient(200deg, rgb(218, 113, 27), rgb(34, 32, 32)); */
+    /* box-shadow: 0px 0px 10px rgb(153, 11, 11); */
+}
+
+.levelUpScore2 {
+    font-family: "knuckles";
+    padding: 2rem 1.75rem;
+    padding-top: 0.5rem;
+    font-size: 2.5rem;
+    font-weight: bolder;
+    text-shadow: 0px 0px 10px rgb(221, 214, 221);
+    color: rgb(230, 19, 202);
+}
+
+.gameOverModalContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    padding-top: 4rem;
+}
+
+.gameOverModalText {
+    font-family: "halloween";
+    color: rgb(17, 76, 170);
+    text-shadow: 0px 0px 10px rgb(255, 255, 255);
+    font-size: 6rem;
+    padding-bottom: 1rem;
+    font-weight: bolder;
+}
+
+.playAgainModal {
+    font-family: "raphia";
+    letter-spacing: 2px;
+    box-sizing: border-box;
+    border: 1px solid green;
+    background-color: green;
+    padding: 0.75rem 1.25rem;
+    color: white;
+    /* border: none; */
+    border-radius: 1rem;
+    font-size: large;
+    font-weight: bolder;
+    text-decoration: none;
+    box-shadow: 0px 0px 10px rgb(46, 45, 45);
+    transition: 0.3s;
+}
+
+.playAgainModal:hover {
+    text-shadow: 0px 0px 10px rgb(255, 255, 255);
+    cursor: pointer;
+    box-shadow: 0px 0px 10px green;
+    border: 1px solid white;
+}
 
 .levelOverModal {
     /* display: unset; */
-    width: 30%;
+    filter: drop-shadow(0px 0px 50px #000000);
+    background: url(PNG/levelOverModal.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 38%;
+    height: 60%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border: none;
-    border-radius: 2rem;
-    box-shadow: 0px 0px 10px black;
-    background-color: #4a7c59;
-    background: linear-gradient(180deg, #4c9964, rgb(33, 33, 33));
+    /* border-radius: 0.5rem; */
+    /* box-shadow: 0px 0px 10px rgb(41, 83, 15); */
+    /* background-color: #4a7c59; */
+    /* background: linear-gradient(180deg, #4c9964, rgb(33, 33, 33)); */
 }
 
 .modalContainer {
@@ -92,33 +190,51 @@ body {
     justify-content: center;
     align-items: center;
     padding: 2.5rem;
+    padding-top: 4rem;
     font-family: "raphia";
     letter-spacing: 2px;
 }
 
 .levelOverText {
-    color: rgb(105, 165, 36);
+    position: relative;
+    color: rgb(122, 18, 132);
     padding: 1rem 0;
     font-weight: bolder;
     font-family: "zilap";
-    font-size: 3rem;
-    text-shadow: 0px 0px 10px rgb(55, 200, 30);
+    font-size: 4.5rem;
+    text-shadow: 0px 0px 10px rgb(69, 66, 66);
+    transition: 0.3s;
+}
+
+.levelOverTextMove {
+    right: -3%;
 }
 
 .overLine {
+    color: rgb(0, 0, 0);
+    font-size: 2rem;
     position: fixed;
-    top: 25%;
-    width: 75%;
+    top: 26.5%;
+    width: 80%;
     height: 5px;
     background-color: rgb(0, 0, 0);
     border: 1px solid grey;
     border-radius: 0.5rem;
     transform: scale(0);
-    transition: 0.75s;
+    right: 1000%;
+    transition: 0.5s;
+}
+
+.arrowHeart {
+    font-size: 5rem;
+    position: fixed;
+    right: -3%;
+    top: -1225%;
 }
 
 .overLineScale {
     transform: scale(1);
+    right: 10%;
 }
 
 .btnsMOdal {
@@ -129,42 +245,47 @@ body {
 }
 
 .mapModal {
+    font-family: "raphia";
+    letter-spacing: 2px;
     padding: 0.75rem 1.25rem;
-    background-color: #0f3b75;
+    background-color: #27252b;
     color: white;
     border: none;
     border-radius: 0.25rem;
     font-weight: bolder;
+    font-size: large;
     text-decoration: none;
-    box-shadow: 0px 0px 10px black;
+    box-shadow: 0px 0px 10px rgb(46, 45, 45);
     transition: 0.3s;
+    border-radius: 1rem;
+    box-sizing: border-box;
+    border: 1px solid #27252b;
 }
 
 .mapModal:hover {
-    color: #0f5875;
     box-shadow: 0px 0px 10px #0f5875;
-    background-color: white;
+    border: 1px solid white;
     cursor: pointer;
+    text-shadow: 0px 0px 10px white;
 }
 
 .nextLevelModal {
-    box-shadow: 0px 0px 10px black;
+    box-shadow: 0px 0px 10px rgb(255, 255, 255);
     padding: 0.75rem 1.5rem;
-    background-color: #936639;
+    background-color: #8e1e92;
     color: white;
     border: none;
-    border-radius: 0.25rem;
+    border-radius: 1rem;
     font-weight: bolder;
     text-decoration: none;
     transition: 0.3s;
 }
 
 .nextLevelModal:hover {
-    color: rgb(211, 199, 31);
-    box-shadow: 0px 0px 10px rgb(211, 199, 31);
+    color: #8e1e92;
+    box-shadow: 0px 0px 10px #8e1e92;
     background-color: white;
     cursor: pointer;
-
 }
 
 .levelUpScore {
@@ -172,10 +293,352 @@ body {
     font-weight: bolder;
     margin-bottom: 1rem;
     letter-spacing: 3px;
-    text-shadow: 0px 0px 10px rgb(0, 0, 0);
-    font-size: larger;
-    color: rgb(97, 94, 101);
+    text-shadow: 0px 0px 10px rgb(123, 122, 122);
+    font-size: 1.5rem;
+    color: rgb(117, 62, 190);
+    padding: 1.75rem 1rem;
+}
+
+/* SETTINGSMODAL */
+.gameSettingsModal {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 1rem;
+    border: 50px solid rgb(0, 0, 0);
+}
+
+.settingsModal {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.settingsContainer {
+    width: 100%;
+    height: 100%;
+    background-color: #9c6644;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background: url(images/settingsBG5.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 1px solid black;
+
+}
+
+.settingsText {
+    position: relative;
+    top: 5%;
+    text-align: center;
+    font-size: 5rem;
+    color: rgb(0, 0, 0);
+    text-shadow: 5px 5px 10px rgb(95, 94, 94);
+    font-family: "knuckles";
+    transition: 0.3s;
+}
+
+.settingsText:hover {
+    text-shadow: 0px 0px 10px rgb(109, 109, 109);
+    cursor: pointer;
+}
+
+.settingsButtonsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+
+.settingsGameControls {
+    text-shadow: 0px 0px 10px rgb(175, 44, 44);
+    font-family: "super";
+    opacity: 0.85;
+    border-radius: 0.5rem;
+    color: white;
+    width: 90%;
+    font-size: xx-large;
+    height: 70%;
+    background-color: rgb(128, 0, 107);
+    background: radial-gradient(rgb(0, 43, 128), rgb(57, 56, 54));
+    background: radial-gradient(rgb(156, 47, 214), rgb(19, 18, 19));
+    border: 5px solid rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 50px rgb(0, 0, 0);
+}
+
+.wasdControls {
+    width: 70%;
+    filter: drop-shadow(10px 10px 5px #0c0c0c);
+}
+
+.arrowControls {
+    width: 70%;
+    filter: drop-shadow(10px 10px 5px #0c0c0c);
+}
+
+.settingsGameControls>span {
+    height: 80%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+.mouseLeftClick {
+    width: 20%;
+    filter: drop-shadow(10px 10px 5px #0c0c0c);
+}
+
+#mouseControl {
+    flex-direction: row;
+    justify-content: center;
+}
+
+.hideSettingsMenu {
+    display: none !important;
+}
+
+.zIndex {
+    z-index: 1 !important;
+    border: 3px solid black !important;
+    border-bottom: none !important;
+    opacity: 1 !important;
+    text-shadow: 0px 0px 10px white;
+    box-shadow: 0px -3px 10px black;
+}
+
+.settingsLevelInfo {
+    font-size: xx-large;
+    font-family: "super";
+    border-radius: 0.5rem;
+    opacity: 0.8;
+    color: white;
+    font-weight: bolder;
+    text-align: center;
+    width: 90%;
+    height: 70%;
+    background-color: rgb(128, 70, 0);
+    border: 5px solid black;
+    background: radial-gradient(rgb(128, 70, 0), rgb(14, 14, 14));
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 50px rgb(0, 0, 0);
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.levelInfoText {
     padding: 1rem;
+    padding-left: 2rem;
+    color: rgb(0, 0, 0);
+    font-family: "knuckles";
+    text-shadow: 0px 0px 10px rgb(175, 120, 43);
+}
+
+.settingsLevelInfo>section {
+    border-left: 3px solid white;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.controlBtn {
+    opacity: 0.6;
+    font-family: "game";
+    box-sizing: border-box;
+    padding: 1rem 2rem;
+    color: white;
+    position: relative;
+    top: 5%;
+    border: none;
+    font-size: large;
+    font-weight: bolder;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    background: rgb(89, 46, 111);
+    transition: opacity 0.2s;
+}
+
+.controlBtn:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.levelBtn {
+    opacity: 0.6;
+    font-size: large;
+    font-weight: bolder;
+    font-family: "game";
+    box-sizing: border-box;
+    border: none;
+    padding: 1rem 2rem;
+    color: white;
+    position: relative;
+    top: 5%;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    background-color: black;
+    background-color: rgb(78, 54, 23);
+    transition: opacity 0.2s;
+}
+
+.levelBtn:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.restartBtn {
+    font-weight: bolder;
+    font-size: 1.5rem;
+    color: rgb(2, 2, 2);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem 2rem;
+    background-color: red;
+    transition: 0.2s;
+    box-shadow: 0px 0px 10px black;
+    font-family: "raphia";
+}
+
+.restartBtn:hover {
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    text-shadow: 0px 0px 10px rgb(5, 5, 5);
+    color: white;
+}
+
+.settingsDiv {
+    position: absolute;
+    right: 5%;
+    /* background: url(PNG/settings.png);
+    background-size: contain;
+    background-repeat: no-repeat; */
+}
+
+.settingsBtn {
+    background-color: rgba(255, 0, 0, 0);
+    border: none;
+    transition: 0.2s;
+}
+
+.settingsBtn>img {
+    width: 45px;
+}
+
+.settingsBtn:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.time {
+    position: absolute;
+    left: 730px;
+}
+
+.score {
+    display: none;
+}
+
+.settingsExitBtn {
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    position: relative;
+    right: -42%;
+    top: -5%;
+    transition: 0.3s;
+}
+
+
+.settingsExitBtn>img {
+    filter: drop-shadow(0px 0px 5px #ebebeb);
+    width: 50%;
+}
+
+.settingsExitBtn:hover {
+    filter: drop-shadow(5px 5px 2px #565656);
+    cursor: pointer;
+    right: -42.5%;
+}
+
+.settingsMusicLabel {
+    text-shadow: 0px 0px 10px black;
+}
+
+.settingsMusicIcon {
+    margin-left: 5rem;
+    background-color: rgba(255, 0, 0, 0);
+    border: none;
+}
+
+.settingsMusicIcon>img {
+    width: 30px;
+    filter: drop-shadow(0px 0px 5px #1e54b0);
+}
+
+.settingsMusicIcon:hover {
+    filter: drop-shadow(0px 0px 5px #8c1092);
+    cursor: pointer;
+}
+
+.footerPlayerLife {
+    position: absolute;
+    /* top: 85%;
+    left: 5%; */
+}
+
+.playerLife {
+    filter: drop-shadow(0px 0px 10px #171717);
+    position: absolute;
+    width: 260px;
+    top: 259px;
+    right: 410px;
+}
+
+.playerLifeProfile {
+    position: absolute;
+    top: 270px;
+    right: 580px;
+    box-sizing: border-box;
+    width: 68px;
+    height: 62px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 79px;
+}
+
+@font-face {
+    font-family: "game";
+    src: url(fonts/game-of-squids-font/GameOfSquids-1GMVL.ttf);
+}
+
+@font-face {
+    font-family: "super";
+    src: url(fonts/super-game-font/Supergame-L3vxW.otf);
+}
+
+@font-face {
+    font-family: "black";
+    src: url(fonts/black-coopy-font/BlackCoopyFreeVersionRegular-Wy95v.ttf);
 }
 
 @font-face {
@@ -196,4 +659,14 @@ body {
 @font-face {
     font-family: "idle";
     src: url(fonts/ode-to-idle-gaming-font/OdeToIdleGaming-R8EM.ttf);
+}
+
+@font-face {
+    font-family: "halloween";
+    src: url(fonts/halloween-slime-font/HalloweenSlimePersonalUse-4B80D.otf);
+}
+
+@font-face {
+    font-family: "knuckles";
+    src: url(fonts/azn-knuckles-trial-font/AznKnucklesTrial-z85pa.otf);
 }

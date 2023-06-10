@@ -1,5 +1,5 @@
 * {
-
+    font-family: "dragon";
     padding: 0;
 }
 
@@ -8,7 +8,6 @@ body {
     overflow: hidden;
     background-color: #1d5e6e;
     background: rgb(45, 93, 108);
-
 }
 
 .mainMap {
@@ -32,11 +31,13 @@ body {
 .weaponsMap,
 .fBoss {
     color: white;
+    font-family: "raphia";
+    letter-spacing: 1.5px;
     font-size: 1rem;
     position: relative;
     top: 25%;
     right: -60%;
-    background-color: rgba(211, 209, 209, 0.188);
+    background-color: rgba(211, 209, 209, 0);
     border: none;
     transition: 0.2s;
     font-weight: bolder;
@@ -59,7 +60,6 @@ body {
     position: relative;
     top: 65%;
     right: -40%;
-
 }
 
 .castle:hover,
@@ -109,6 +109,7 @@ body {
     color: white;
     font-weight: bolder;
     font-size: 1rem;
+    letter-spacing: 1px;
 }
 
 .UPGRADE:hover {
@@ -259,6 +260,7 @@ body {
 }
 
 .castleModal {
+    top: 2%;
     width: 50%;
     color: white;
     border-radius: 1rem;
@@ -277,6 +279,7 @@ body {
     letter-spacing: 2px;
     padding: 1rem;
     text-align: center;
+    font-family: "battle";
 }
 
 .containerModal>img:hover {
@@ -290,15 +293,16 @@ body {
     align-items: center;
     border: none;
     background-color: #6398a8;
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
+    border: 3px solid rgb(86, 177, 218);
 }
 
 .castleModalSea {
     width: 50%;
     color: white;
     padding: 0;
-    border: 10px solid #31464b;
-    border-radius: 0.75rem;
+    border: 7px solid #31464b;
+    border-radius: 1rem;
 }
 
 .containerSea>img {
@@ -308,16 +312,15 @@ body {
     top: 10%;
     opacity: 1;
     transition: 0.5s;
-
 }
 
 .infoSea {
-    font-size: x-large;
+    font-size: large;
+    font-family: "battle";
     font-weight: bolder;
     letter-spacing: 2px;
     padding: 1rem;
     text-align: center;
-
 }
 
 .containerSea>img:hover {
@@ -345,6 +348,7 @@ body {
 /* weapons */
 
 .weaponModalNav {
+    opacity: 1;
     display: flex;
 }
 
@@ -379,6 +383,7 @@ body {
 }
 
 .castleModalWeapons {
+
     width: 75%;
     color: white;
     height: 75%;
@@ -390,6 +395,7 @@ body {
     border-radius: 0.75rem;
     box-shadow: 0px 0px 10px rgb(0, 0, 0);
 }
+
 
 .containerWeapons>img {
     width: 500px;
@@ -416,6 +422,7 @@ body {
 }
 
 .weaponsSlots {
+    opacity: 0.5;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
@@ -452,6 +459,10 @@ body {
     /* border: 10px solid rgb(62, 60, 60); */
     transition: 0.3s;
 
+}
+
+.infoWeapons {
+    opacity: 1;
 }
 
 .weaponsModal:hover {
@@ -599,4 +610,9 @@ body {
 @font-face {
     font-family: "raphia";
     src: url(Fonts/raphia-font/RaphiaPersonalUse-gxe8E.otf);
+}
+
+@font-face {
+    font-family: "battle";
+    src: url(Fonts/battle-road-font/BattleRoadDemo-YzL3j.ttf);
 }
